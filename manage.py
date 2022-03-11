@@ -1,19 +1,21 @@
 from app import create_app,db
-from flask_script import Manager,Server
-from app.models import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from app.models import User
-
-#create app instance
-app = create_app
-manager = Manager(app)
-manager.add_command('server',Server)
-
-manager.add_command('db',MigrateCommand)
-migrate = Migrate(app,db)
+from flask_migrate import Migrate
 
 
-@manager.shell
+
+app = create_app ('production')
+
+#creating migration instance
+migrate = Migrate(db,app)
+
+#creating shell context
+@app.shell_context_processor
 def make_shell_context():
-    return dict(app= app,db = db,User = User)
-if __name__ == '__main__':
-    manager.run()
+    return dict(db=db,User = User)
+    
+
+
+ 
+ 
