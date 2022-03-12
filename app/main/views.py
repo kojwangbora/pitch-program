@@ -20,7 +20,7 @@ def pitches():
   #   },
   #   {
   #     "pitch" : "I am in the planning stages of a mobile app company in New York. The company will create mobile apps which will help people write business plans on their mobile devices.",
-  #     "name" : "Mchimba-kisima huingia-mwenyewe"
+  #     "name" : "Mchimba mwenyewe"
   #   }
 
   # ]
