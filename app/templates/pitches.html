@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/pitch.css')}}">
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static',filename = 'js/app.js')}}"></script>
+{% endblock %}
+{%block title%}
+  pitches
+{% endblock %}
+{%block content%}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="pitch-head">
+        <h1>
+          Pitch Yourself Below
+        </h1>
+        <div class="pitch-content">
+          <div>
+            {% for post in posts %}
+            <h6>{{post.pitch}}</h6>
+            <em><p>{{post.name}}</p></em>
+            <a href="{{url_for('main.like', id = post.id)}}"><i class=" icon fas fa-thumbs-up"></i></a><span class = "custom"> {{post.likes.count()}} </span></p>
+            <a href="{{url_for('main.dislike', id =post.id )}}"><i class="fas fa-thumbs-down"></i></a> <span class = "custom"> {{post.dislikes.count()}}</span></p>
+            <hr>
+            <a href="">Add comment</a>
+            <br>
+            <br>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="categories">
+        <div class="cat-holder">
+
+          {{wtf.quick_form(pitch_form)}}
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+
