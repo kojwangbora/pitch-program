@@ -1,0 +1,37 @@
+{% extends 'auth/auth-base.html' %}
+{%block css%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/auth.css')}}">
+{% endblock %}
+{%block title%}
+  Authentication
+{% endblock %}
+
+{%  block content %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<div class="back">
+  <div class = ' container'>
+    <div class="form-container">
+      <div class="head">
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ {{message}}
+</div>
+{% endfor %}
+{% endif%}
+{% endwith %}
+        <h1>LOGIN</h1>
+      </div>
+      <div class="fm-body">
+        {{wtf.quick_form(form)}}
+        <h3>Don't have an account?   <span><a href="{{url_for('.register')}}">Sign Up</a></span></h3>
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+{% endblock %}
