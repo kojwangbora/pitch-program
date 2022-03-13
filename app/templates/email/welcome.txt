@@ -1,0 +1,12 @@
+
+
+Hello {{ user.username }},
+
+Welocome to Pitch Program
+
+We have just seen you have created an account with us. welcome to the family and enjoy making pitches
+
+
+Sincerely
+
+Pitch Program Team
