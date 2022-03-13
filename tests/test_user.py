@@ -4,7 +4,7 @@ from app.models import User
 class UserModelTest(unittest.TestCase):
 
     def setUp(self):
-        self.new_user = User(password = 'aple')
+        self.new_user = User(password = 'apple')
 
     def test_password_setter(self):
 
