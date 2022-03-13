@@ -1,19 +1,33 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField,SubmitField
-from wtforms.validators import DataRequired,Email,EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
+from app.models import User
 
 
-class RegistrationForm(FlaskForm):
-    email = StringField('Your Email Address',validators=[DataRequired(),Email()])
-    username = StringField('Enter your username',validators = [DataRequired()])
-    firstname = StringField('Enter your first name',validators = [DataRequired()])
-    lastname = StringField('Enter your last name',validators = [DataRequired()])
-    password = PasswordField('Password',validators = [DataRequired(), EqualTo('password_confirm',message = 'Passwords must match')])
-    password_confirm = PasswordField('Confirm Passwords',validators = [DataRequired()])
-    submit = SubmitField('Sign Up')
+
+
+class Register(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(message='Please enter your userame'),Length(min=4, max = 20)])
+    email = StringField("Email Address", validators= [DataRequired(),Email()])
+    password = PasswordField('Password', validators=[
+    DataRequired(), EqualTo('confirm_password', message='Passwords must match.')])    
+    confirm_password = PasswordField('confirm password', validators=[DataRequired()])
+    submit = SubmitField('Register')
+
+
+    def validate_user(self, field):
+        if User.query.filter_by(username = field.data).first():
+            raise ValidationError('User Already exists')
+
+
+    def validate_email(self,field):
+        if User.query.filter_by(email =field.data).first():
+            raise ValidationError('Email exists')
+
 
 class LoginForm(FlaskForm):
-    email = StringField('Your Email Address',validators=[DataRequired(),Email()])
-    password = PasswordField('Password',validators =[DataRequired()])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Login')
+    email = StringField('Email', validators=[DataRequired(), Length(1, 64),
+    Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Keep me logged in')
+    submit = SubmitField('Log In')
